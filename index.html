@@ -9,22 +9,22 @@
         <script src="vendor/js/underscore.js"></script>
         <script src="vendor/js/kendo.all.min.js"></script>
         <script src="js/imagegallery.js"></script>
-        <script type="text/x-kendoui-template" id="kitteh-view-template">
+        <script type="text/x-kendoui-template" id="image-view-template">
             <img data-bind="attr: {src: url}">
         </script>
 
-        <script type="text/x-kendoui-template" id="kitteh-list-template">
+        <script type="text/x-kendoui-template" id="image-list-template">
             <div class="scrollable" data-bind="style: {width: scrollingSize}">
                 <div
-                data-role="listview"
-                data-template="kitteh-list-item-template"
-                data-selectable="single"
-                data-bind="source: imageDataSource, events: {change: imageClicked}"
+                    data-role="listview"
+                    data-template="image-list-item-template"
+                    data-selectable="single"
+                    data-bind="source: imageDataSource, events: {change: imageClicked}"
                 ></div>
             </div>
         </script>
 
-        <script type="text/x-kendoui-template" id="kitteh-list-item-template">
+        <script type="text/x-kendoui-template" id="image-list-item-template">
             <img data-bind="attr: {src: url}" width="150">
         </script>
 
@@ -62,7 +62,7 @@
             </div>
         </script>
 
-        <script type="text/x-kendoui-template" id="kitteh-gallereh-layout-template">
+        <script type="text/x-kendoui-template" id="image-gallery-layout-template">
             <header class="navbar navbar-static-top">
                 <div class="navbar-inner">
                     <div class="container">
