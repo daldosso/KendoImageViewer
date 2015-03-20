@@ -13,8 +13,9 @@ var startImageGallery = function(){
             },
             transport: {
                 read: {
-                    url: "images.json",
-                    dataType: "JSON"
+                    url: "http://www.adaldosso.com/kendo-image-list/server/kendo-images-crud.php",
+                    jsonpCallback: "callback",
+                    dataType: "jsonp"
                 },
                 create: {
                     url: "images.json",
@@ -31,7 +32,7 @@ var startImageGallery = function(){
 
         scrollingSize: function(){
             var count = this.get("imageCount");
-            var width = count * 165;
+            var width = count * 180;
             return width + "px";
         },
 
@@ -62,7 +63,6 @@ var startImageGallery = function(){
                 status.removeClass("valid").addClass("invalid");
                 return false;
             }
-
 
             this.trigger("image:save", {
                 name: this.get("name"),
