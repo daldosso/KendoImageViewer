@@ -53,8 +53,16 @@ var startImageGallery = function(){
         name: "",
         url: "",
 
-        saveClicked: function(e){
+        saveClicked: function(e) {
             e.preventDefault();
+
+            var validator = $("#image-form").kendoValidator().data("kendoValidator"),
+                status = $(".status");
+            if (!validator.validate()) {
+                status.removeClass("valid").addClass("invalid");
+                return false;
+            }
+
 
             this.trigger("image:save", {
                 name: this.get("name"),

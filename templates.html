@@ -21,11 +21,12 @@
     <div class="row">
         <div class="span7 offset2">
             <h1>Add Image</h1>
-            <form class="form-horizontal">
+            <form class="form-horizontal" id="image-form">
                 <div class="control-group">
-                    <label for="name" class="control-label">Image Name: </label>
+                    <label for="name" class="control-label required">Image Name: </label>
                     <div class="controls">
-                        <input id="name" type="text" name="name" data-bind="value: name">
+                        <input id="name" type="text" name="name" data-bind="value: name" required validationMessage="Enter {0}">
+                        <span class="status"></span>
                     </div>
                 </div>
                 <div class="control-group">
