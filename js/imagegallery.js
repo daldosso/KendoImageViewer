@@ -49,15 +49,16 @@ var startImageGallery = function() {
                     url: "http://www.adaldosso.com/kendo-image-list/server/kendo-images-crud.php",
                     dataType: "jsonp"
                 },
-                delete: {
+                destroy: {
                     url: "http://www.adaldosso.com/kendo-image-list/server/kendo-images-crud.php",
                     dataType: "jsonp"
                 }
             },
-
-            change: function(){
-                var length = this.view().length;
-                imageList.set("imageCount", length);
+            change: function() {
+                if (this.view) {
+                    var length = this.view().length;
+                    imageList.set("imageCount", length);
+                }
             }
         }),
 
@@ -80,9 +81,22 @@ var startImageGallery = function() {
             return image;
         },
 
-        deleteImage: function(data){
-            var image = this.imageDataSource.get(data.id);
-            this.imageDataSource.remove(image);
+        deleteImage: function(data) {
+            var image = {};
+            var dataSource = this.imageDataSource;
+            var images = dataSource.data();
+            for (var i=0; i<images.length; i++) {
+                image = images[i];
+                if (image.id === data.id) {
+                    dataSource.remove(image);
+                    $.ajax({
+                        url: 'http://www.adaldosso.com/kendo-image-list/server/kendo-images-crud.php?id=' + image.id,
+                        dataType: 'jsonp'
+                    });
+                    //dataSource.sync();
+                }
+            }
+            layout.showIn("#main", addImageForm);
         }
     });
 
