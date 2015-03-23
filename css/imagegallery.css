@@ -290,3 +290,17 @@ footer a, footer a:hover {
   float: left;
   padding-right: 5px;
 }
+
+.k-widget.k-tooltip-validation {
+    background-color: #F2241B;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 10px;
+}
+
+#delete {
+    position: absolute;
+    top: 240px;
+    left: 300px;
+}

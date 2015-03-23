@@ -1,16 +1,44 @@
-var startImageGallery = function(){
+var startImageGallery = function() {
 
     var image = kendo.observable({
-        url: "http://placekitten.com/300/200"
+        id: null,
+        url: "",
+        name: "",
+        deleteClicked: function(e) {
+            e.preventDefault();
+            var kendoWindow = $("<div />").kendoWindow({
+                width: 200,
+                height: 80,
+                title: "Confirm",
+                resizable: false,
+                modal: true
+            });
+
+            kendoWindow.data("kendoWindow")
+                .content($("#delete-confirmation").html())
+                .center().open();
+
+            kendoWindow
+                .find(".delete-confirm,.delete-cancel")
+                .click(function() {
+                    if ($(this).hasClass("delete-confirm")) {
+                        image.trigger("image:delete", image);
+                    }
+                    kendoWindow.data("kendoWindow").close();
+                })
+                .end();
+        }
     });
 
     var imageList = kendo.observable({
         imageCount: 0,
 
         imageDataSource: new kendo.data.DataSource({
+
             schema: {
-                model: { id: "id"}
+                model: { id: "id" }
             },
+
             transport: {
                 read: {
                     url: "http://www.adaldosso.com/kendo-image-list/server/kendo-images-crud.php",
@@ -18,9 +46,12 @@ var startImageGallery = function(){
                     dataType: "jsonp"
                 },
                 create: {
-                    url: "images.json",
-                    dataType: "JSON",
-                    type: "POST"
+                    url: "http://www.adaldosso.com/kendo-image-list/server/kendo-images-crud.php",
+                    dataType: "jsonp"
+                },
+                delete: {
+                    url: "http://www.adaldosso.com/kendo-image-list/server/kendo-images-crud.php",
+                    dataType: "jsonp"
                 }
             },
 
@@ -47,6 +78,11 @@ var startImageGallery = function(){
             var image = this.imageDataSource.add(data);
             this.imageDataSource.sync();
             return image;
+        },
+
+        deleteImage: function(data){
+            var image = this.imageDataSource.get(data.id);
+            this.imageDataSource.remove(image);
         }
     });
 
@@ -92,9 +128,15 @@ var startImageGallery = function(){
         showImage(image);
     });
 
-    function showImage(kitteh){
-        image.set("url", kitteh.url);
-        layout.showIn("#main", kittehView);
+    image.bind("image:delete", function(imageSelected) {
+        imageList.deleteImage(imageSelected);
+    });
+
+    function showImage(imageSelected){
+        image.set("id", imageSelected.id);
+        image.set("url", imageSelected.url);
+        image.set("name", imageSelected.name);
+        layout.showIn("#main", selectedView);
     }
 
     var addImageForm = new kendo.View("add-image-form-template", {
@@ -105,7 +147,7 @@ var startImageGallery = function(){
         model: imageList
     });
 
-    var kittehView = new kendo.View("image-view-template", {
+    var selectedView = new kendo.View("image-view-template", {
         model: image
     });
 

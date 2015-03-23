@@ -50,19 +50,26 @@
     //$mysqli->query($query);
     */
     
-    $data = array();    
-    $sql = "SELECT * FROM kendo_images"; 
-    if ($result = $mysqli->query($sql)) { 
-        while($obj = $result->fetch_object()) {
-            $data[] = array(
-              'id' => $obj->id,
-              'name' => $obj->name,
-              'url' => $obj->url,
-              'description' => $obj->description
-            );                    
+    $name = htmlspecialchars($_GET["name"]);
+    $url = htmlspecialchars($_GET["url"]);
+    if ($name != "") {
+        $query = "INSERT INTO kendo_images(name, url, description) VALUES ('$name', '$url', '$name')";
+        $mysqli->query($query);
+    } else {
+        $data = array();    
+        $sql = "SELECT * FROM kendo_images"; 
+        if ($result = $mysqli->query($sql)) { 
+            while($obj = $result->fetch_object()) {
+                $data[] = array(
+                  'id' => $obj->id,
+                  'name' => $obj->name,
+                  'url' => $obj->url,
+                  'description' => $obj->description
+                );                    
+            } 
         } 
-    } 
-    $result->close();    
-    
-    echo "callback(" . json_encode($data) . ");";
+        $result->close();    
+        echo "callback(" . json_encode($data) . ");";    
+    }
+
 ?>

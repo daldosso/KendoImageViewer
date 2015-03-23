@@ -1,4 +1,12 @@
 <script type="text/x-kendoui-template" id="image-view-template">
+
+    <div id="delete-confirmation" style="visibility: hidden; display: none">
+        <p class="delete-message">Are you sure?</p>
+        <button class="delete-confirm k-button">Yes</button>
+        <a href="#" class="delete-cancel">No</a>
+    </div>
+
+    <button id="delete" class="btn btn-danger" data-bind="click: deleteClicked">&nbsp;<i class="icon-ok-sign icon-white"></i>&nbsp;Delete</button>
     <img data-bind="attr: {src: url}">
 </script>
 
@@ -30,9 +38,9 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label for="image-url" class="control-label">Image Url: </label>
+                    <label class="control-label">Image Url: </label>
                     <div class="controls">
-                        <input id="url" type="text" name="url" placeholder="http://placekitten.com/300/200" data-bind="value:url">
+                        <input id="url" type="text" name="url" data-bind="value:url" required validationMessage="Enter {0}">
                     </div>
                 </div>
                 <div class="control-group">
@@ -94,3 +102,4 @@
 <script type="text/x-kendoui-template" id="foo">
     <span>Foo</span>
 </script>
+
